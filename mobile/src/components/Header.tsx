@@ -4,8 +4,11 @@ import colors from 'tailwindcss/colors'
 
 
 import Logo from '../assets/logo.svg'
+import { useNavigation } from '@react-navigation/native'
 
 export function Header() {
+
+    const { navigate } = useNavigation()
 
     return (
         <View className="w-full flex-row items-center justify-between">
@@ -15,6 +18,7 @@ export function Header() {
             <TouchableOpacity 
                 className="flex-row items-center h-11 px-4 border border-violet-500 rounded-lg"
                 activeOpacity={0.7}
+                onPress={() => navigate('new')}
             >
                 <Feather 
                     name="plus"

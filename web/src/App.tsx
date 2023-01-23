@@ -1,14 +1,16 @@
-import { Habit } from "./components/Habit";
+import { Header } from './components/Header';
+import { SummaryTable } from './components/SummaryTable';
 
-function App() {
+import './lib/dayjs'
+import './styles/global.css'
+
+export function App() {
   return (
-    <div>
-      <Habit completed={3}/>
-      <Habit completed={20}/>
-      <Habit completed={20}/>
-      <Habit completed={10}/>
+    <div className="flex justify-center items-center w-screen h-screen">
+      <div className="w-full max-w-5xl px-6 flex flex-col gap-16">
+        <Header />
+        <SummaryTable />
+      </div>
     </div>
   )
 }
-
-export default App
