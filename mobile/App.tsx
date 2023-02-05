@@ -1,17 +1,26 @@
 import './src/lib/dayjs'
 
-import { View, StatusBar } from 'react-native';
+import { Button, StatusBar } from 'react-native';
 import {
   useFonts,  
   Inter_400Regular, 
   Inter_600SemiBold, 
   Inter_700Bold, 
   Inter_800ExtraBold
-} from '@expo-google-fonts/inter'
-
+} from '@expo-google-fonts/inter';
+import * as Notifications from 'expo-notifications';
 
 import { Loading } from './src/components/Loading';
 import { Routes } from './src/routes';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false
+  }),
+
+});
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -21,6 +30,24 @@ export default function App() {
     Inter_800ExtraBold
   })
   
+  async function scheduleNotification() {
+    const trigger = new Date(Date.now());
+    trigger.setMinutes(trigger.getMinutes() + 1);
+
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Olá Leonardo! 😘",
+        body: "Espero que esteja bem! Conseguiu realizar algum hábito hoje?"
+      },
+      trigger
+    })
+  }
+
+  async function getSchedulesNotifications() {
+    const schedules = await Notifications.getAllScheduledNotificationsAsync();
+    console.log(schedules);
+  }
+
   if(!fontsLoaded) {
     return (
       <Loading />
@@ -30,7 +57,7 @@ export default function App() {
   return (
     <>
       <Routes />
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent/>
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
     </>
   );
 }
